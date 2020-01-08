@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  schedule:
+  - cron: "*/10 * * * *"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 1
+    - name: Update price of canoe
+      run: |
+        newPrice=$(shuf -i 250-500 -n 1)
+        sed -i -e "s/price\">[^<]*</price\">$newPrice</g" hosting/files/canoe.html
+    - name: Update price of gingerbread house
+      run: |
+        newPrice=$(shuf -i 5-15 -n 1)
+        sed -i -e "s/price\">[^<]*</price\">$newPrice</g" hosting/files/gingerbread.html
+    - name: Update price of marshmallow
+      run: |
+        newPrice=$(shuf -i 15-25 -n 1)
+        sed -i -e "s/price\">[^<]*</price\">$newPrice</g" hosting/files/marshmallow.html
+    - name: Commit price changes
+      run: |
+        git add .
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git commit -m "Automated price update" -a
+    - name: Push price changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
