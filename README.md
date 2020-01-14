@@ -8,6 +8,8 @@ the retailer currently sells three items:
 
 You can access the online retailer at [https://goodsnstuff-xyngs.mongodbstitch.com](https://goodsnstuff-xyngs.mongodbstitch.com).
 
+To see a live visualiziation of the prices over the last day, visit the [Goods 'n Stuff Price Tracking Dashboard](https://charts.mongodb.com/charts-bargain-hunter-pfwxn/public/dashboards/3194a630-e19e-47c8-b845-eddd4b348f95) that I created using MongoDB Charts.
+
 Here is how the prices are rotated behind the scenes every 10 minutes:
 1. A GitHub Action stored in [updatePricesAndPushChanges.yml](/.github/workflows/updatePricesAndPushChanges.yml) runs every 10 minutes. 
 The Action executes the following steps:
